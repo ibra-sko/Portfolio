@@ -14,6 +14,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
 import CursorTrail from "./ui/cursor-trail";
 import OrbitStack from "./ui/orbit-stack";
 import { SplineScene } from "./ui/spline-scene";
@@ -128,19 +129,15 @@ function Reveal({
 function ProjectVisual({ type }: { type: string }) {
   if (type === "mobile") {
     return (
-      <div className="project-art mobile-art" aria-hidden="true">
-        <div className="phone phone-back">
-          <div className="phone-notch" />
-          <div className="race-lines" />
-          <div className="phone-word">P</div>
+      <div className="project-art mobile-art polewin-art" aria-label="Trois écrans de l’application Polewin : connexion, accueil et classement">
+        <div className="polewin-screen polewin-screen-login">
+          <Image src="/polewin/login.png" alt="Écran de connexion Polewin" width={946} height={2048} sizes="(max-width: 720px) 130px, 190px" />
         </div>
-        <div className="phone phone-front">
-          <div className="phone-notch" />
-          <div className="app-top"><span>POLEWIN</span><small>RACE 18</small></div>
-          <div className="driver-row active"><span>01</span><b>Prediction</b><em>+12</em></div>
-          <div className="driver-row"><span>02</span><b>Podium</b><em>+8</em></div>
-          <div className="driver-row"><span>03</span><b>Fastest lap</b><em>+5</em></div>
-          <div className="app-bottom"><i /><i /><i /></div>
+        <div className="polewin-screen polewin-screen-ranking">
+          <Image src="/polewin/classement.png" alt="Classement des pilotes Polewin" width={946} height={2048} sizes="(max-width: 720px) 130px, 190px" />
+        </div>
+        <div className="polewin-screen polewin-screen-home">
+          <Image src="/polewin/accueil.png" alt="Accueil de Polewin avec le prochain Grand Prix" width={946} height={2048} sizes="(max-width: 720px) 150px, 220px" />
         </div>
       </div>
     );
