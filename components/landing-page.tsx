@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import StackNetwork from "./ui/stack-network";
 
 const services = [
   {
@@ -299,12 +300,16 @@ export default function LandingPage() {
               Je travaille sur des interfaces, des APIs, des bases de données, des produits mobiles et des automatisations. L’objectif reste le même : livrer quelque chose de propre, maintenable et réellement utile.
             </p>
           </Reveal>
-          <Reveal className="skills-panel" delay={.08}>
-            <div className="skill-row"><span>Front-end</span><b>React / Next.js / React Native</b></div>
-            <div className="skill-row"><span>Back-end</span><b>Express / Java / APIs</b></div>
-            <div className="skill-row"><span>Data</span><b>Supabase / PostgreSQL / Oracle</b></div>
-            <div className="skill-row"><span>Automation</span><b>n8n / Webhooks / AI</b></div>
-            <div className="skill-row"><span>Delivery</span><b>Vercel / Docker / Git</b></div>
+          <Reveal className="stack-panel" delay={.08}>
+            <div className="stack-panel-head">
+              <span>STACK / OUTILS</span>
+              <p>Les technos que j’utilise selon le produit à construire — pas une liste de logos décorative.</p>
+            </div>
+            <StackNetwork />
+            <div className="stack-footnote">
+              <span>React Native · Express · TypeScript</span>
+              <span>Next.js · Supabase · Java · Docker · n8n</span>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -321,7 +326,7 @@ export default function LandingPage() {
           </Reveal>
           <div className="contact-bottom">
             <span>© 2026 Ibrahim Sako</span>
-            <div><a href="https://github.com/ibra-sko"><Github size={16}/> GitHub</a><a href="#">LinkedIn <MoveUpRight size={14}/></a></div>
+            <div><a href="#"><Github size={16}/> GitHub</a><a href="#">LinkedIn <MoveUpRight size={14}/></a></div>
           </div>
         </div>
       </section>
