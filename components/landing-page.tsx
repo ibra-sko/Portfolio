@@ -85,10 +85,10 @@ const projects = [
   {
     index: "02",
     name: "Ysferia — WEI",
-    label: "Event platform",
-    headline: "Une plateforme événementielle utilisée pour organiser un WEI.",
+    label: "Web-app événementielle",
+    headline: "Une web-app événementielle pour faire vivre et organiser un WEI.",
     description:
-      "Inscriptions, profils, tribus, classements, rôles administrateurs et expérience mobile-first dans une interface pensée pour être utilisée en conditions réelles.",
+      "Une expérience web pensée pour les participants et les organisateurs : profils, tribus, défis photo, activités et outils d’administration, accessibles sur mobile pendant l’événement.",
     stack: ["Next.js", "Supabase", "PWA", "Vercel"],
     type: "dashboard",
     url: undefined,
@@ -148,14 +148,18 @@ function ProjectVisual({ type }: { type: string }) {
 
   if (type === "dashboard") {
     return (
-      <div className="project-art dashboard-art" aria-hidden="true">
-        <div className="dash-shell">
-          <div className="dash-sidebar"><b>Y</b><span /><span /><span /><span /></div>
-          <div className="dash-main">
-            <div className="dash-header"><span>Tribus</span><i /></div>
-            <div className="dash-stats"><div><small>Participants</small><strong>96</strong></div><div><small>Tribus</small><strong>08</strong></div></div>
-            <div className="dash-table"><span /><span /><span /><span /></div>
-          </div>
+      <div className="project-art ysferia-art" aria-label="Quatre vues de la web-app événementielle Ysferia : profil, défis et administration">
+        <div className="ysferia-screen ysferia-screen-challenges">
+          <Image src="/evementiel/defis.png" alt="Défis photo des tribus" width={660} height={1428} sizes="(max-width: 720px) 120px, 165px" />
+        </div>
+        <div className="ysferia-screen ysferia-screen-tribes">
+          <Image src="/evementiel/gestion-tribu.png" alt="Gestion des tribus par les organisateurs" width={660} height={1428} sizes="(max-width: 720px) 120px, 165px" />
+        </div>
+        <div className="ysferia-screen ysferia-screen-activity">
+          <Image src="/evementiel/gestion-activite.png" alt="Administration des activités Ysferia" width={660} height={1428} sizes="(max-width: 720px) 120px, 165px" />
+        </div>
+        <div className="ysferia-screen ysferia-screen-profile">
+          <Image src="/evementiel/profil.png" alt="Profil participant et classement des tribus" width={660} height={1428} sizes="(max-width: 720px) 135px, 185px" />
         </div>
       </div>
     );
