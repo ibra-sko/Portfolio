@@ -6,7 +6,6 @@ import {
   ArrowRight,
   Braces,
   Check,
-  Code2,
   Mail,
   Menu,
   MoveUpRight,
@@ -14,6 +13,10 @@ import {
   Workflow,
   X,
 } from "lucide-react";
+import { useState } from "react";
+import CursorTrail from "./ui/cursor-trail";
+import OrbitStack from "./ui/orbit-stack";
+import { SplineScene } from "./ui/spline-scene";
 
 function Github({ size = 24, className = "" }: { size?: number | string; className?: string }) {
   return (
@@ -34,8 +37,6 @@ function Github({ size = 24, className = "" }: { size?: number | string; classNa
     </svg>
   );
 }
-import { useState } from "react";
-import StackNetwork from "./ui/stack-network";
 
 const services = [
   {
@@ -179,6 +180,8 @@ export default function LandingPage() {
 
   return (
     <main id="top">
+      <CursorTrail />
+
       <header className="nav-wrap">
         <nav className="nav container">
           <a href="#top" className="wordmark" aria-label="Retour en haut">
@@ -229,25 +232,32 @@ export default function LandingPage() {
           </motion.div>
         </motion.div>
 
-        <motion.div className="hero-stage" initial={reduce ? false : { opacity: 0, scale: .985 }} animate={reduce ? undefined : { opacity: 1, scale: 1 }} transition={{ duration: .9, delay: .25, ease: [.22, 1, .36, 1] }}>
-          <div className="stage-grid" />
-          <div className="stage-meta stage-meta-left"><span>SELECTED STACK</span><b>TS / REACT / JAVA / NODE</b></div>
-          <div className="stage-meta stage-meta-right"><span>BASED IN</span><b>FRANCE / REMOTE</b></div>
-          <motion.div className="stage-symbol" animate={reduce ? undefined : { rotate: [0, 3, 0, -3, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}>
-            <span>{"{"}</span><Code2 /><span>{"}"}</span>
-          </motion.div>
-          <div className="stage-line stage-line-one" />
-          <div className="stage-line stage-line-two" />
-          <div className="stage-caption">BUILD / SHIP / ITERATE</div>
+        <motion.div
+          className="spline-stage"
+          initial={reduce ? false : { opacity: 0, y: 22 }}
+          animate={reduce ? undefined : { opacity: 1, y: 0 }}
+          transition={{ duration: .85, delay: .22, ease: [.22, 1, .36, 1] }}
+        >
+          <div className="spline-copy">
+            <span className="spline-eyebrow">INTERACTIVE / 3D</span>
+            <h2>Des interfaces qui<br />réagissent vraiment.</h2>
+            <p>
+              Je construis des expériences web et produit où le mouvement sert l’interface, pas juste la décoration.
+            </p>
+            <div className="spline-meta">
+              <span>Web</span><span>Mobile</span><span>API</span><span>Motion</span>
+            </div>
+          </div>
+          <div className="spline-canvas-wrap">
+            <div className="spline-grid" />
+            <div className="spline-fade" />
+            <SplineScene
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="spline-canvas"
+            />
+            <div className="spline-hint"><span /> Drag / explore</div>
+          </div>
         </motion.div>
-      </section>
-
-      <section className="ticker" aria-hidden="true">
-        <div className="ticker-track">
-          {["PRODUCT", "WEB", "MOBILE", "AUTOMATION", "FULL-STACK", "PRODUCT", "WEB", "MOBILE", "AUTOMATION", "FULL-STACK"].map((item, i) => (
-            <span key={`${item}-${i}`}>{item}<i>↗</i></span>
-          ))}
-        </div>
       </section>
 
       <section className="work-section container" id="work">
@@ -310,7 +320,7 @@ export default function LandingPage() {
           <h2>Je développe.<br />Mais je pense produit.</h2>
         </Reveal>
 
-        <div className="about-grid">
+        <div className="about-grid about-grid-orbit">
           <Reveal className="about-copy">
             <p className="about-lead">
               Mon rôle ne s’arrête pas à écrire du code. Je cherche d’abord à comprendre ce qui doit être construit, pourquoi, et comment le rendre simple à utiliser.
@@ -319,16 +329,12 @@ export default function LandingPage() {
               Je travaille sur des interfaces, des APIs, des bases de données, des produits mobiles et des automatisations. L’objectif reste le même : livrer quelque chose de propre, maintenable et réellement utile.
             </p>
           </Reveal>
-          <Reveal className="stack-panel" delay={.08}>
-            <div className="stack-panel-head">
+          <Reveal className="orbit-panel" delay={.08}>
+            <div className="orbit-panel-head">
               <span>STACK / OUTILS</span>
-              <p>Les technos que j’utilise selon le produit à construire — pas une liste de logos décorative.</p>
+              <p>Une stack polyvalente qui tourne autour du produit à construire.</p>
             </div>
-            <StackNetwork />
-            <div className="stack-footnote">
-              <span>React Native · Express · TypeScript</span>
-              <span>Next.js · Supabase · Java · Docker · n8n</span>
-            </div>
+            <OrbitStack />
           </Reveal>
         </div>
       </section>
