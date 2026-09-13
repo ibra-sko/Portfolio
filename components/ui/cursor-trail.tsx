@@ -1,5 +1,6 @@
 "use client";
 
+import "./interactive.css";
 import { useEffect, useRef } from "react";
 
 export default function CursorTrail() {
@@ -14,7 +15,7 @@ export default function CursorTrail() {
 
     let raf = 0;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const pointer = { x: -100, y: -100, px: -100, py: -100 };
+    const pointer = { x: -100, y: -100 };
     const points = Array.from({ length: 16 }, () => ({ x: -100, y: -100 }));
 
     const resize = () => {
@@ -27,15 +28,12 @@ export default function CursorTrail() {
     };
 
     const move = (event: PointerEvent) => {
-      pointer.px = pointer.x;
-      pointer.py = pointer.y;
       pointer.x = event.clientX;
       pointer.y = event.clientY;
     };
 
     const draw = () => {
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
       points[0].x += (pointer.x - points[0].x) * 0.34;
       points[0].y += (pointer.y - points[0].y) * 0.34;
 
@@ -51,7 +49,7 @@ export default function CursorTrail() {
         const alpha = 0.02 + progress * 0.12;
         ctx.beginPath();
         ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(245, 244, 239, ${alpha})`;
+        ctx.fillStyle = `rgba(245,244,239,${alpha})`;
         ctx.fill();
       }
 
