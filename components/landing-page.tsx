@@ -80,6 +80,7 @@ const projects = [
       "Conception du produit, expérience mobile, logique de pronostics et architecture API. Un projet complet, de l’idée jusqu’à une application destinée aux stores.",
     stack: ["React Native", "Express", "TypeScript", "API"],
     type: "mobile",
+    url: "https://polewin.fr",
   },
   {
     index: "02",
@@ -90,6 +91,7 @@ const projects = [
       "Inscriptions, profils, tribus, classements, rôles administrateurs et expérience mobile-first dans une interface pensée pour être utilisée en conditions réelles.",
     stack: ["Next.js", "Supabase", "PWA", "Vercel"],
     type: "dashboard",
+    url: undefined,
   },
   {
     index: "03",
@@ -100,6 +102,7 @@ const projects = [
       "Prospection, CRM, emailing, webhooks et appels API orchestrés dans des workflows robustes pour faire gagner du temps à une équipe.",
     stack: ["n8n", "APIs", "Webhooks", "AI"],
     type: "flow",
+    url: undefined,
   },
 ];
 
@@ -273,6 +276,27 @@ export default function LandingPage() {
                   <h3>{project.name}</h3>
                   <h4>{project.headline}</h4>
                   <p className="project-description">{project.description}</p>
+                  {project.url && (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 8,
+                        width: "max-content",
+                        marginTop: 22,
+                        paddingBottom: 6,
+                        borderBottom: "1px solid currentColor",
+                        font: '600 10px/1 "DM Mono", monospace',
+                        textTransform: "uppercase",
+                        letterSpacing: ".05em",
+                      }}
+                    >
+                      Découvrir Polewin <MoveUpRight size={15} />
+                    </a>
+                  )}
                   <div className="project-stack">{project.stack.map((tag) => <span key={tag}>{tag}</span>)}</div>
                 </div>
                 <ProjectVisual type={project.type} />
