@@ -7,7 +7,6 @@ import {
   Braces,
   Check,
   Code2,
-  Github,
   Mail,
   Menu,
   MoveUpRight,
@@ -15,6 +14,26 @@ import {
   Workflow,
   X,
 } from "lucide-react";
+
+function Github({ size = 24, className = "" }: { size?: number | string; className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5 0-1.4-.5-2.5-1.5-3.4.1-.3.4-1.6-.1-3.3 0 0-1.2-.4-3.8 1.4a12.8 12.8 0 0 0-7 0C6 1.8 4.8 2.2 4.8 2.2c-.5 1.7-.2 3 .1 3.3-1 1-1.5 2-1.5 3.4 0 5 3 6.2 6 6.5-.8.9-1.2 2-1.2 3.1v4" />
+      <path d="M9 18c-2 1-4 1-6-2" />
+    </svg>
+  );
+}
 import { useState } from "react";
 import StackNetwork from "./ui/stack-network";
 
@@ -120,7 +139,7 @@ function ProjectVisual({ type }: { type: string }) {
           <div className="driver-row active"><span>01</span><b>Prediction</b><em>+12</em></div>
           <div className="driver-row"><span>02</span><b>Podium</b><em>+8</em></div>
           <div className="driver-row"><span>03</span><b>Fastest lap</b><em>+5</em></div>
-          <div className="app-bottom"><i/><i/><i/></div>
+          <div className="app-bottom"><i /><i /><i /></div>
         </div>
       </div>
     );
@@ -130,11 +149,11 @@ function ProjectVisual({ type }: { type: string }) {
     return (
       <div className="project-art dashboard-art" aria-hidden="true">
         <div className="dash-shell">
-          <div className="dash-sidebar"><b>Y</b><span/><span/><span/><span/></div>
+          <div className="dash-sidebar"><b>Y</b><span /><span /><span /><span /></div>
           <div className="dash-main">
-            <div className="dash-header"><span>Tribus</span><i/></div>
+            <div className="dash-header"><span>Tribus</span><i /></div>
             <div className="dash-stats"><div><small>Participants</small><strong>96</strong></div><div><small>Tribus</small><strong>08</strong></div></div>
-            <div className="dash-table"><span/><span/><span/><span/></div>
+            <div className="dash-table"><span /><span /><span /><span /></div>
           </div>
         </div>
       </div>
@@ -146,10 +165,10 @@ function ProjectVisual({ type }: { type: string }) {
       <div className="flow-grid" />
       <div className="flow-line line-a" />
       <div className="flow-line line-b" />
-      <div className="flow-node node-a"><Mail size={18}/><span>Lead</span></div>
-      <div className="flow-node node-b"><Braces size={18}/><span>API</span></div>
-      <div className="flow-node node-c"><Sparkles size={18}/><span>AI</span></div>
-      <div className="flow-node node-d"><Workflow size={18}/><span>CRM</span></div>
+      <div className="flow-node node-a"><Mail size={18} /><span>Lead</span></div>
+      <div className="flow-node node-b"><Braces size={18} /><span>API</span></div>
+      <div className="flow-node node-c"><Sparkles size={18} /><span>AI</span></div>
+      <div className="flow-node node-d"><Workflow size={18} /><span>CRM</span></div>
     </div>
   );
 }
@@ -170,13 +189,13 @@ export default function LandingPage() {
             <a href="#services">Prestations</a>
             <a href="#about">À propos</a>
           </div>
-          <a className="nav-contact desktop-only" href="#contact">Me contacter <ArrowDownRight size={15}/></a>
+          <a className="nav-contact desktop-only" href="#contact">Me contacter <ArrowDownRight size={15} /></a>
           <button className="menu-toggle" aria-label="Ouvrir le menu" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X size={20}/> : <Menu size={20}/>} 
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </nav>
         {menuOpen && (
-          <motion.div className="mobile-nav container" initial={{opacity:0,y:-8}} animate={{opacity:1,y:0}}>
+          <motion.div className="mobile-nav container" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}>
             <a href="#work" onClick={() => setMenuOpen(false)}>Projets</a>
             <a href="#services" onClick={() => setMenuOpen(false)}>Prestations</a>
             <a href="#about" onClick={() => setMenuOpen(false)}>À propos</a>
@@ -194,28 +213,28 @@ export default function LandingPage() {
           transition={{ duration: 0.8 }}
         >
           <div className="hero-title-wrap">
-            <motion.p className="hero-role" initial={reduce ? false : {opacity:0,y:14}} animate={reduce ? undefined : {opacity:1,y:0}} transition={{delay:.05}}>
+            <motion.p className="hero-role" initial={reduce ? false : { opacity: 0, y: 14 }} animate={reduce ? undefined : { opacity: 1, y: 0 }} transition={{ delay: .05 }}>
               Développeur full-stack freelance
             </motion.p>
-            <motion.h1 initial={reduce ? false : {opacity:0,y:30}} animate={reduce ? undefined : {opacity:1,y:0}} transition={{duration:.75,delay:.08,ease:[.22,1,.36,1]}}>
-              Je conçois et développe<br/><span>des produits numériques.</span>
+            <motion.h1 initial={reduce ? false : { opacity: 0, y: 30 }} animate={reduce ? undefined : { opacity: 1, y: 0 }} transition={{ duration: .75, delay: .08, ease: [.22, 1, .36, 1] }}>
+              Je conçois et développe<br /><span>des produits numériques.</span>
             </motion.h1>
           </div>
 
-          <motion.div className="hero-side" initial={reduce ? false : {opacity:0,y:22}} animate={reduce ? undefined : {opacity:1,y:0}} transition={{duration:.7,delay:.2}}>
+          <motion.div className="hero-side" initial={reduce ? false : { opacity: 0, y: 22 }} animate={reduce ? undefined : { opacity: 1, y: 0 }} transition={{ duration: .7, delay: .2 }}>
             <p>
               Sites, applications web, produits mobiles et automatisations — avec une attention particulière portée au produit, à la performance et aux détails.
             </p>
-            <a href="#contact" className="text-link">Démarrer un projet <MoveUpRight size={17}/></a>
+            <a href="#contact" className="text-link">Démarrer un projet <MoveUpRight size={17} /></a>
           </motion.div>
         </motion.div>
 
-        <motion.div className="hero-stage" initial={reduce ? false : {opacity:0,scale:.985}} animate={reduce ? undefined : {opacity:1,scale:1}} transition={{duration:.9,delay:.25,ease:[.22,1,.36,1]}}>
+        <motion.div className="hero-stage" initial={reduce ? false : { opacity: 0, scale: .985 }} animate={reduce ? undefined : { opacity: 1, scale: 1 }} transition={{ duration: .9, delay: .25, ease: [.22, 1, .36, 1] }}>
           <div className="stage-grid" />
           <div className="stage-meta stage-meta-left"><span>SELECTED STACK</span><b>TS / REACT / JAVA / NODE</b></div>
           <div className="stage-meta stage-meta-right"><span>BASED IN</span><b>FRANCE / REMOTE</b></div>
-          <motion.div className="stage-symbol" animate={reduce ? undefined : { rotate: [0, 3, 0, -3, 0] }} transition={{duration:9,repeat:Infinity,ease:"easeInOut"}}>
-            <span>{"{"}</span><Code2/><span>{"}"}</span>
+          <motion.div className="stage-symbol" animate={reduce ? undefined : { rotate: [0, 3, 0, -3, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}>
+            <span>{"{"}</span><Code2 /><span>{"}"}</span>
           </motion.div>
           <div className="stage-line stage-line-one" />
           <div className="stage-line stage-line-two" />
@@ -234,7 +253,7 @@ export default function LandingPage() {
       <section className="work-section container" id="work">
         <Reveal className="section-intro">
           <div><span className="section-no">01</span><p>Selected work</p></div>
-          <h2>Des projets utilisés,<br/>pas juste des maquettes.</h2>
+          <h2>Des projets utilisés,<br />pas juste des maquettes.</h2>
         </Reveal>
 
         <div className="project-list">
@@ -247,9 +266,9 @@ export default function LandingPage() {
                   <h3>{project.name}</h3>
                   <h4>{project.headline}</h4>
                   <p className="project-description">{project.description}</p>
-                  <div className="project-stack">{project.stack.map((tag)=><span key={tag}>{tag}</span>)}</div>
+                  <div className="project-stack">{project.stack.map((tag) => <span key={tag}>{tag}</span>)}</div>
                 </div>
-                <ProjectVisual type={project.type}/>
+                <ProjectVisual type={project.type} />
               </article>
             </Reveal>
           ))}
@@ -260,18 +279,18 @@ export default function LandingPage() {
         <div className="container">
           <Reveal className="section-intro inverted">
             <div><span className="section-no">02</span><p>Prestations</p></div>
-            <h2>Un périmètre clair.<br/>Un prix lisible.</h2>
+            <h2>Un périmètre clair.<br />Un prix lisible.</h2>
           </Reveal>
 
           <div className="service-list">
             {services.map((service, index) => (
-              <Reveal key={service.title} delay={index*.04}>
-                <motion.article className="service-line" whileHover={reduce ? undefined : { x: 8 }} transition={{type:"spring",stiffness:360,damping:28}}>
+              <Reveal key={service.title} delay={index * .04}>
+                <motion.article className="service-line" whileHover={reduce ? undefined : { x: 8 }} transition={{ type: "spring", stiffness: 360, damping: 28 }}>
                   <span className="service-number">{service.number}</span>
                   <div className="service-name"><h3>{service.title}</h3><p>{service.description}</p></div>
-                  <div className="service-details">{service.details.map((d)=><span key={d}><Check size={13}/>{d}</span>)}</div>
+                  <div className="service-details">{service.details.map((d) => <span key={d}><Check size={13} />{d}</span>)}</div>
                   <div className="service-price"><small>à partir de</small><strong>{service.price}</strong></div>
-                  <ArrowDownRight className="service-arrow" size={25}/>
+                  <ArrowDownRight className="service-arrow" size={25} />
                 </motion.article>
               </Reveal>
             ))}
@@ -288,7 +307,7 @@ export default function LandingPage() {
       <section className="about-section container" id="about">
         <Reveal className="section-intro">
           <div><span className="section-no">03</span><p>À propos</p></div>
-          <h2>Je développe.<br/>Mais je pense produit.</h2>
+          <h2>Je développe.<br />Mais je pense produit.</h2>
         </Reveal>
 
         <div className="about-grid">
@@ -318,15 +337,15 @@ export default function LandingPage() {
         <div className="container contact-inner">
           <Reveal>
             <p className="contact-kicker">UN PROJET EN TÊTE ?</p>
-            <h2>On peut le construire<br/><span>proprement.</span></h2>
+            <h2>On peut le construire<br /><span>proprement.</span></h2>
           </Reveal>
           <Reveal className="contact-actions" delay={.08}>
-            <a href="mailto:ton-email@example.com" className="contact-button">Parler du projet <ArrowRight size={19}/></a>
+            <a href="mailto:ton-email@example.com" className="contact-button">Parler du projet <ArrowRight size={19} /></a>
             <p>Décris-moi simplement ton idée, ton objectif et ton budget approximatif. Je te réponds avec une première direction.</p>
           </Reveal>
           <div className="contact-bottom">
             <span>© 2026 Ibrahim Sako</span>
-            <div><a href="#"><Github size={16}/> GitHub</a><a href="#">LinkedIn <MoveUpRight size={14}/></a></div>
+            <div><a href="https://github.com/ibra-sko"><Github size={16} /> GitHub</a><a href="#">LinkedIn <MoveUpRight size={14} /></a></div>
           </div>
         </div>
       </section>
