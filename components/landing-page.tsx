@@ -1,23 +1,23 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import {
   ArrowDownRight,
   ArrowRight,
-  Braces,
   Check,
-  Mail,
   Menu,
   MoveUpRight,
-  Sparkles,
-  Workflow,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import CursorTrail from "./ui/cursor-trail";
 import OrbitStack from "./ui/orbit-stack";
 import { SplineScene } from "./ui/spline-scene";
+import { TextScramble } from "./ui/text-scramble";
+import { ProjectFrame } from "./ui/project-frame";
+import { AutomationFlow } from "./ui/automation-flow";
+import { Passions, Timeline } from "./ui/about-journey";
 
 function Github({ size = 24, className = "" }: { size?: number | string; className?: string }) {
   return (
@@ -95,12 +95,12 @@ const projects = [
   },
   {
     index: "03",
-    name: "Automations",
-    label: "Systems",
-    headline: "Des workflows qui font le travail répétitif à ta place.",
+    name: "Automatisations",
+    label: "Workflows n8n",
+    headline: "Un prospect écrit, la suite se fait toute seule.",
     description:
-      "Prospection, CRM, emailing, webhooks et appels API orchestrés dans des workflows robustes pour faire gagner du temps à une équipe.",
-    stack: ["n8n", "APIs", "Webhooks", "AI"],
+      "Le formulaire est reçu, l’entreprise identifiée, la demande qualifiée par IA, la fiche créée dans le CRM et un premier email envoyé. Quinze minutes de copier-coller remplacées par un workflow de deux secondes.",
+    stack: ["n8n", "Webhooks", "API", "IA", "CRM"],
     type: "flow",
     url: undefined,
   },
@@ -119,20 +119,22 @@ function Reveal({
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 24 }}
-      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-70px" }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={reduce ? false : { opacity: 0, y: 38, filter: "blur(7px)" }}
+      whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.12, margin: "0px 0px -40px 0px" }}
+      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
 }
 
+
+
 function ProjectVisual({ type }: { type: string }) {
   if (type === "mobile") {
     return (
-      <div className="project-art mobile-art polewin-art" aria-label="Trois écrans de l’application Polewin : connexion, accueil et classement">
+      <ProjectFrame className="mobile-art polewin-art" label="Trois écrans de l’application Polewin : connexion, accueil et classement">
         <div className="polewin-screen polewin-screen-login">
           <Image src="/polewin/login.png" alt="Écran de connexion Polewin" width={946} height={2048} sizes="(max-width: 720px) 130px, 190px" />
         </div>
@@ -142,13 +144,13 @@ function ProjectVisual({ type }: { type: string }) {
         <div className="polewin-screen polewin-screen-home">
           <Image src="/polewin/accueil.png" alt="Accueil de Polewin avec le prochain Grand Prix" width={946} height={2048} sizes="(max-width: 720px) 150px, 220px" />
         </div>
-      </div>
+      </ProjectFrame>
     );
   }
 
   if (type === "dashboard") {
     return (
-      <div className="project-art ysferia-art" aria-label="Quatre vues de la web-app événementielle Ysferia : profil, défis et administration">
+      <ProjectFrame className="ysferia-art" label="Quatre vues de la web-app événementielle Ysferia : profil, défis et administration">
         <div className="ysferia-screen ysferia-screen-challenges">
           <Image src="/evementiel/defis.png" alt="Défis photo des tribus" width={660} height={1428} sizes="(max-width: 720px) 120px, 165px" />
         </div>
@@ -161,29 +163,63 @@ function ProjectVisual({ type }: { type: string }) {
         <div className="ysferia-screen ysferia-screen-profile">
           <Image src="/evementiel/profil.png" alt="Profil participant et classement des tribus" width={660} height={1428} sizes="(max-width: 720px) 135px, 185px" />
         </div>
-      </div>
+      </ProjectFrame>
     );
   }
 
   return (
-    <div className="project-art flow-art" aria-hidden="true">
-      <div className="flow-grid" />
-      <div className="flow-line line-a" />
-      <div className="flow-line line-b" />
-      <div className="flow-node node-a"><Mail size={18} /><span>Lead</span></div>
-      <div className="flow-node node-b"><Braces size={18} /><span>API</span></div>
-      <div className="flow-node node-c"><Sparkles size={18} /><span>AI</span></div>
-      <div className="flow-node node-d"><Workflow size={18} /><span>CRM</span></div>
-    </div>
+    <ProjectFrame className="flow-art" hidden>
+      <AutomationFlow />
+    </ProjectFrame>
+  );
+}
+
+function ProjectRow({ project, total }: { project: (typeof projects)[number]; total: number }) {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 45%"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 26, restDelta: 0.001 });
+  const opacity = useTransform(scrollYProgress, [0, 0.05, 0.95, 1], [0.35, 1, 1, 0.35]);
+
+  return (
+    <article className="project-row" ref={ref}>
+      <div className="project-number">
+        <div className="project-number-sticky">
+          <motion.span className="project-number-value" style={reduce ? undefined : { opacity }}>
+            {project.index}
+            <em>/{String(total).padStart(2, "0")}</em>
+          </motion.span>
+          <span className="project-number-track" aria-hidden="true">
+            <motion.span className="project-number-fill" style={{ scaleY: reduce ? 1 : progress }} />
+          </span>
+        </div>
+      </div>
+      <div className="project-copy">
+        <p className="project-label">{project.label}</p>
+        <h3 className="hover-copy"><TextScramble text={project.name} delay={0.04} reduce={reduce} inView speed={0.045} /></h3>
+        <h4 className="hover-copy"><TextScramble text={project.headline} delay={0.06} reduce={reduce} inView speed={0.026} /></h4>
+        <p className="project-description">{project.description}</p>
+        {project.url && (
+          <a href={project.url} target="_blank" rel="noreferrer" className="project-link">
+            Découvrir {project.name} <MoveUpRight size={15} />
+          </a>
+        )}
+        <div className="project-stack">{project.stack.map((tag) => <span key={tag}>{tag}</span>)}</div>
+      </div>
+      <ProjectVisual type={project.type} />
+    </article>
   );
 }
 
 export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 110, damping: 30, restDelta: 0.001 });
 
   return (
     <main id="top">
+      <motion.div className="scroll-progress" style={{ scaleX: reduce ? scrollYProgress : smoothProgress }} aria-hidden="true" />
       <CursorTrail />
 
       <header className="nav-wrap">
@@ -223,9 +259,11 @@ export default function LandingPage() {
             <motion.p className="hero-role" initial={reduce ? false : { opacity: 0, y: 14 }} animate={reduce ? undefined : { opacity: 1, y: 0 }} transition={{ delay: .05 }}>
               Développeur full-stack freelance
             </motion.p>
-            <motion.h1 initial={reduce ? false : { opacity: 0, y: 30 }} animate={reduce ? undefined : { opacity: 1, y: 0 }} transition={{ duration: .75, delay: .08, ease: [.22, 1, .36, 1] }}>
-              Je conçois et développe<br /><span>des produits numériques.</span>
-            </motion.h1>
+            <h1 className="hover-copy">
+              <TextScramble text="Je conçois et développe" delay={0.12} reduce={reduce} />
+              <br />
+              <TextScramble text="des produits numériques." delay={1.42} reduce={reduce} className="hero-title-muted" />
+            </h1>
           </div>
 
           <motion.div className="hero-side" initial={reduce ? false : { opacity: 0, y: 22 }} animate={reduce ? undefined : { opacity: 1, y: 0 }} transition={{ duration: .7, delay: .2 }}>
@@ -244,7 +282,11 @@ export default function LandingPage() {
         >
           <div className="spline-copy">
             <span className="spline-eyebrow">INTERACTIVE / 3D</span>
-            <h2>Des interfaces qui<br />réagissent vraiment.</h2>
+            <h2 className="hover-copy">
+              <TextScramble text="Des interfaces qui" delay={0.08} reduce={reduce} inView speed={0.045} />
+              <br />
+              <TextScramble text="réagissent vraiment." delay={1} reduce={reduce} inView speed={0.045} />
+            </h2>
             <p>
               Je construis des expériences web et produit où le mouvement sert l’interface, pas juste la décoration.
             </p>
@@ -259,7 +301,7 @@ export default function LandingPage() {
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
               className="spline-canvas"
             />
-            <div className="spline-hint"><span /> Drag / explore</div>
+            <div className="spline-hint"><span /> Bouge le curseur</div>
           </div>
         </motion.div>
       </section>
@@ -267,44 +309,17 @@ export default function LandingPage() {
       <section className="work-section container" id="work">
         <Reveal className="section-intro">
           <div><span className="section-no">01</span><p>Selected work</p></div>
-          <h2>Des projets utilisés,<br />pas juste des maquettes.</h2>
+          <h2 className="hover-copy">
+            <TextScramble text="Des projets utilisés," delay={0.04} reduce={reduce} inView speed={0.042} />
+            <br />
+            <TextScramble text="pas juste des maquettes." delay={0.96} reduce={reduce} inView speed={0.042} />
+          </h2>
         </Reveal>
 
         <div className="project-list">
           {projects.map((project, index) => (
             <Reveal key={project.name} delay={index * 0.05}>
-              <article className="project-row">
-                <div className="project-number">{project.index}</div>
-                <div className="project-copy">
-                  <p className="project-label">{project.label}</p>
-                  <h3>{project.name}</h3>
-                  <h4>{project.headline}</h4>
-                  <p className="project-description">{project.description}</p>
-                  {project.url && (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 8,
-                        width: "max-content",
-                        marginTop: 22,
-                        paddingBottom: 6,
-                        borderBottom: "1px solid currentColor",
-                        font: '600 10px/1 "DM Mono", monospace',
-                        textTransform: "uppercase",
-                        letterSpacing: ".05em",
-                      }}
-                    >
-                      Découvrir Polewin <MoveUpRight size={15} />
-                    </a>
-                  )}
-                  <div className="project-stack">{project.stack.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                </div>
-                <ProjectVisual type={project.type} />
-              </article>
+              <ProjectRow project={project} total={projects.length} />
             </Reveal>
           ))}
         </div>
@@ -314,18 +329,34 @@ export default function LandingPage() {
         <div className="container">
           <Reveal className="section-intro inverted">
             <div><span className="section-no">02</span><p>Prestations</p></div>
-            <h2>Un périmètre clair.<br />Un prix lisible.</h2>
+            <h2 className="hover-copy">
+              <TextScramble text="Un périmètre clair." delay={0.04} reduce={reduce} inView speed={0.044} />
+              <br />
+              <TextScramble text="Un prix lisible." delay={0.94} reduce={reduce} inView speed={0.044} />
+            </h2>
           </Reveal>
 
           <div className="service-list">
             {services.map((service, index) => (
               <Reveal key={service.title} delay={index * .04}>
-                <motion.article className="service-line" whileHover={reduce ? undefined : { x: 8 }} transition={{ type: "spring", stiffness: 360, damping: 28 }}>
-                  <span className="service-number">{service.number}</span>
-                  <div className="service-name"><h3>{service.title}</h3><p>{service.description}</p></div>
-                  <div className="service-details">{service.details.map((d) => <span key={d}><Check size={13} />{d}</span>)}</div>
-                  <div className="service-price"><small>à partir de</small><strong>{service.price}</strong></div>
-                  <ArrowDownRight className="service-arrow" size={25} />
+                <motion.article className="service-card" whileHover={reduce ? undefined : { y: -6 }} transition={{ type: "spring", stiffness: 320, damping: 25 }}>
+                  <div className="service-card-head">
+                    <span className="service-number">/{service.number}</span>
+                    <span className="service-scope">Forfait de départ</span>
+                  </div>
+                  <div className="service-name">
+                    <h3><TextScramble text={service.title} delay={0.04} reduce={reduce} inView speed={0.045} /></h3>
+                    <p>{service.description}</p>
+                  </div>
+                  <div className="service-details" aria-label={`Inclus dans l’offre ${service.title}`}>
+                    {service.details.map((detail) => <span key={detail}><Check size={14} />{detail}</span>)}
+                  </div>
+                  <div className="service-card-footer">
+                    <div className="service-price"><small>À partir de</small><strong>{service.price}</strong></div>
+                    <a className="service-cta" href="#contact" aria-label={`Parler de l’offre ${service.title}`}>
+                      Parler du projet <ArrowRight size={16} />
+                    </a>
+                  </div>
                 </motion.article>
               </Reveal>
             ))}
@@ -342,12 +373,16 @@ export default function LandingPage() {
       <section className="about-section container" id="about">
         <Reveal className="section-intro">
           <div><span className="section-no">03</span><p>À propos</p></div>
-          <h2>Je développe.<br />Mais je pense produit.</h2>
+          <h2 className="hover-copy">
+            <TextScramble text="Je développe." delay={0.04} reduce={reduce} inView speed={0.045} />
+            <br />
+            <TextScramble text="Mais je pense produit." delay={0.72} reduce={reduce} inView speed={0.045} />
+          </h2>
         </Reveal>
 
         <div className="about-grid about-grid-orbit">
           <Reveal className="about-copy">
-            <p className="about-lead">
+            <p className="about-lead hover-copy">
               Mon rôle ne s’arrête pas à écrire du code. Je cherche d’abord à comprendre ce qui doit être construit, pourquoi, et comment le rendre simple à utiliser.
             </p>
             <p>
@@ -362,17 +397,26 @@ export default function LandingPage() {
             <OrbitStack />
           </Reveal>
         </div>
+
+        <Timeline />
+        <Passions />
       </section>
 
       <section className="contact-section" id="contact">
         <div className="container contact-inner">
           <Reveal>
             <p className="contact-kicker">UN PROJET EN TÊTE ?</p>
-            <h2>On peut le construire<br /><span>proprement.</span></h2>
+            <h2 className="hover-copy">
+              <TextScramble text="On peut le construire" delay={0.04} reduce={reduce} inView speed={0.044} />
+              <br />
+              <TextScramble text="proprement." delay={1} reduce={reduce} inView speed={0.044} className="contact-title-soft" />
+            </h2>
           </Reveal>
           <Reveal className="contact-actions" delay={.08}>
-            <a href="mailto:ton-email@example.com" className="contact-button">Parler du projet <ArrowRight size={19} /></a>
-            <p>Décris-moi simplement ton idée, ton objectif et ton budget approximatif. Je te réponds avec une première direction.</p>
+            <div className="contact-intro">
+              <p>Décris-moi ton idée, tes objectifs et ton budget approximatif. Je te réponds avec une première direction.</p>
+              <a href="mailto:ibrahim.sakotraore@gmail.com" className="contact-email">Écris-moi par email <MoveUpRight size={15} /></a>
+            </div>
           </Reveal>
           <div className="contact-bottom">
             <span>© 2026 Ibrahim Sako</span>

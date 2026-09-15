@@ -10,16 +10,19 @@
   "dependencies": {
     "@splinetool/react-spline": "^4.1.0",
     "@splinetool/runtime": "^1.12.98",
+    "geist": "^1.7.2",
     "lucide-react": "latest",
     "motion": "13.2.0",
     "next": "16.3.3",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "three": "^0.186.0"
   },
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@types/three": "^0.186.0",
     "typescript": "latest"
   }
 }
